@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +20,8 @@ import logoImg from '../../assets/logo.png';
 import { Container, Title, BackToSignIn, BackToSignInText } from './styles';
 
 const SignUp: React.FC = () => {
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
   const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
 
@@ -43,9 +46,36 @@ const SignUp: React.FC = () => {
               <Title>Crie sua conta</Title>
             </View>
             <Form ref={formRef} onSubmit={handleSignUp}>
-              <Input name="name" icon="user" placeholder="Nome" />
-              <Input name="email" icon="mail" placeholder="E-mail" />
-              <Input name="password" icon="lock" placeholder="Senha" />
+              <Input
+                autoFocus
+                returnKeyType="next"
+                onSubmitEditing={() => emailInputRef.current?.focus()}
+                name="name"
+                icon="user"
+                placeholder="Nome"
+                autoCapitalize="words"
+              />
+              <Input
+                ref={emailInputRef}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+                name="email"
+                icon="mail"
+                placeholder="E-mail"
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+              />
+              <Input
+                ref={passwordInputRef}
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
+                name="password"
+                icon="lock"
+                placeholder="Senha"
+                secureTextEntry
+                textContentType="newPassword"
+              />
             </Form>
             <Button onPress={() => formRef.current?.submitForm()}>
               Entrar
