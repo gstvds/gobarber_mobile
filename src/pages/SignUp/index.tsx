@@ -47,7 +47,6 @@ const SignUp: React.FC = () => {
             </View>
             <Form ref={formRef} onSubmit={handleSignUp}>
               <Input
-                autoFocus
                 returnKeyType="next"
                 onSubmitEditing={() => emailInputRef.current?.focus()}
                 name="name"
